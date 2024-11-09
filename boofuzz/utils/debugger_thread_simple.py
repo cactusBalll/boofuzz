@@ -126,7 +126,8 @@ class DebuggerThreadSimple(threading.Thread):
                 return False
         if self.proc_name:
             self.log("done. waiting for start command to terminate.")
-            os.waitpid(self._process.pid, 0)
+            if self._process:
+                os.waitpid(self._process.pid, 0)
             self.log('searching for process by name "{0}"'.format(self.proc_name))
             self.watch()
             self._psutil_proc = psutil.Process(pid=self.pid)
